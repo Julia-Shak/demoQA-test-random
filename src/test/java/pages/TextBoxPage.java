@@ -1,10 +1,10 @@
+// src/test/java/pages/TextBoxPage.java
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.open;
 
 public class TextBoxPage {
     private final SelenideElement
@@ -14,14 +14,14 @@ public class TextBoxPage {
             permanentAddressTextarea = $("#permanentAddress"),
             submitButton = $("#submit");
 
-
     public TextBoxPage openPage() {
         open("/text-box");
         return this;
     }
-    public TextBoxPage removeBanners() {
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
+
+    public TextBoxPage closeBanners() {
+        executeJavaScript("document.querySelector('#fixedban')?.remove()");
+        executeJavaScript("document.querySelector('footer')?.remove()");
         return this;
     }
 
@@ -53,11 +53,8 @@ public class TextBoxPage {
     public TextBoxPage checkOutput(String fullName, String email, String currentAddr, String permAddr) {
         $("#name").shouldHave(text("Name:" + fullName));
         $("#email").shouldHave(text("Email:" + email));
-
-        // Проверяем value
         $("#currentAddress").shouldHave(attribute("value", currentAddr));
         $("#permanentAddress").shouldHave(attribute("value", permAddr));
-
         return this;
     }
 }

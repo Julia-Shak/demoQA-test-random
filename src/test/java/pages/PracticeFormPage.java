@@ -1,13 +1,12 @@
+// src/test/java/pages/PracticeFormPage.java
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 import components.DatePicker;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selectors.byText;
 
 public class PracticeFormPage {
-    // Поля формы
     private final SelenideElement
             firstName = $("#firstName"),
             lastName = $("#lastName"),
@@ -16,21 +15,22 @@ public class PracticeFormPage {
             userNumber = $("#userNumber"),
             dateOfBirthInput = $("#dateOfBirthInput"),
             subjectsInput = $("#subjectsInput"),
-            hobbiesMusic = $("#hobbiesWrapper").$(byText("Music")),
             uploadPicture = $("#uploadPicture"),
             currentAddress = $("#currentAddress"),
             state = $("#state"),
             city = $("#city"),
             submitButton = $("#submit");
 
+    private final DatePicker datePicker = new DatePicker();
+
     public PracticeFormPage openPage() {
         open("/automation-practice-form");
         return this;
     }
 
-    public PracticeFormPage removeBanners() {
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
+    public PracticeFormPage closeBanners() {
+        executeJavaScript("document.querySelector('#fixedban')?.remove()");
+        executeJavaScript("document.querySelector('footer')?.remove()");
         return this;
     }
 
@@ -58,7 +58,6 @@ public class PracticeFormPage {
         userNumber.setValue(number);
         return this;
     }
-    private final DatePicker datePicker = new DatePicker();
 
     public PracticeFormPage setDateOfBirth(String day, String month, String year) {
         dateOfBirthInput.click();
@@ -72,8 +71,8 @@ public class PracticeFormPage {
         return this;
     }
 
-    public PracticeFormPage selectHobbyMusic() {
-        hobbiesMusic.click();
+    public PracticeFormPage selectHobby(String hobby) {
+        $("#hobbiesWrapper").$(byText(hobby)).click();
         return this;
     }
 

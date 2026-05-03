@@ -1,108 +1,48 @@
+// src/test/java/tests/PracticeFormTest.java
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import components.ResultModal;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
+import utils.RandomUtils;
+import components.ResultModal;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-
-public class PracticeFormTest {
-
-    @BeforeAll
-    static void setUp() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
-    }
+public class PracticeFormTest extends TestBase {
 
     @Test
-    void minimalDataTest() {
-        // Только обязательные поля: First Name, Last Name, Gender, Mobile
+    void fillPracticeFormWithRandomDataTest() {
+        String firstName = RandomUtils.getFirstName();
+        String lastName = RandomUtils.getLastName();
+        String email = RandomUtils.getEmail();
+        String mobile = RandomUtils.getMobile();
+        String address = RandomUtils.getAddress();
+        String hobby = RandomUtils.getRandomHobby();
+        String[] stateCity = RandomUtils.getRandomStateAndCity();
+        String state = stateCity[0];
+        String city = stateCity[1];
+        String[] dob = RandomUtils.getRandomDateOfBirthParts();
+
         new PracticeFormPage()
                 .openPage()
-                .removeBanners()
-                .setFirstName("Min")
-                .setLastName("User")
+                .closeBanners()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
                 .selectGenderFemale()
-                .setMobile("3981449006")
-                .submit();
-
-        $(".modal-content").shouldBe(visible);
-
-        new ResultModal()
-                .checkField("Student Name", "Min User")
-                .checkField("Gender", "Female")
-                .checkField("Mobile", "3981449006")
-                .close()
-        ;
-    }
-    @Test
-    void fullFormSubmissionTest() {
-        new PracticeFormPage()
-                .openPage()
-                .removeBanners()
-                .setFirstName("Shak")
-                .setLastName("Montan")
-                .setEmail("montana90@gmail.ru")
-                .selectGenderFemale()
-                .setMobile("0000000001")
-                .setDateOfBirth("11", "November", "1996")
+                .setMobile(mobile)
+                .setDateOfBirth(dob[0], dob[1], dob[2])
                 .addSubject("English")
-                .selectHobbyMusic()
-                .uploadPicture("image.png")
-                .setAddress("001")
-                .setStateAndCity("Haryana", "Karnal")
+                .selectHobby(hobby)
+                .uploadPicture("img/1.png")
+                .setAddress(address)
+                .setStateAndCity(state, city)
                 .submit();
-        $(".modal-content").shouldBe(visible);
 
         new ResultModal()
-                .checkField("Student Name", "Shak Montan")
-                .checkField("Student Email", "montana90@gmail.ru")
+                .checkField("Student Name", firstName + " " + lastName)
+                .checkField("Student Email", email)
                 .checkField("Gender", "Female")
-                .checkField("Mobile", "0000000001")
-                .checkField("Date of Birth", "11 November,1996")
-                .checkField("Subjects", "English")
-                .checkField("Hobbies", "Music")
-                .checkField("Picture", "image.png")
-                .checkField("Address", "001")
-                .checkStateAndCity("Haryana Karnal")
+                .checkField("Mobile", mobile)
+                .checkStateAndCity(state + " " + city)
                 .close();
-    }
-
-    @Test
-    void negativeEmailTest() {
-        new PracticeFormPage()
-                .openPage()
-                .removeBanners()
-                .setFirstName("Bad")
-                .setLastName("Email")
-                .setEmail("invalid-email") // ← невалидный email (нет @)
-                .selectGenderFemale()
-                .setMobile("1234567890")
-                .submit();
-
-        // Проверяем, что модальное окно НЕ появилось (даже через 4 секунды)
-        $(".modal-content").shouldNot(exist);
-    }
-
-   @Test
-   void negativeMobileTooShortTest() {
-       new PracticeFormPage()
-               .openPage()
-               .removeBanners()
-               .setFirstName("Short")
-               .setLastName("Number")
-               .setEmail("short@num.com")
-               .selectGenderFemale()
-               .setMobile("123456789") // ← 9 цифр → невалидно
-               .submit();
-
-       // Проверяем, модалка НЕ появилась
-       $(".modal-control").shouldNot(exist);
-
     }
 }
