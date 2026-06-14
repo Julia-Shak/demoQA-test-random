@@ -1,26 +1,28 @@
-// src/test/java/tests/TextBoxTest.java
 package tests;
 
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
+import utils.RandomUtils;
 
 public class TextBoxTest extends TestBase {
 
+    RandomUtils randomUtils = new RandomUtils();
+
     @Test
     void fillTextBoxFormTest() {
+        String fullName = randomUtils.getFullName();
+        String email = randomUtils.getEmail();
+        String currentAddress = randomUtils.getAddress();
+        String permanentAddress = randomUtils.getAddress();
+
         new TextBoxPage()
                 .openPage()
                 .closeBanners()
-                .setFullName("Shak Montan")
-                .setEmail("montana90@gmail.ru")
-                .setCurrentAddress("001 Haryana Karnal")
-                .setPermanentAddress("Same as current")
+                .setFullName(fullName)
+                .setEmail(email)
+                .setCurrentAddress(currentAddress)
+                .setPermanentAddress(permanentAddress)
                 .submit()
-                .checkOutput(
-                        "Shak Montan",
-                        "montana90@gmail.ru",
-                        "001 Haryana Karnal",
-                        "Same as current"
-                );
+                .checkOutput(fullName, email, currentAddress, permanentAddress);
     }
 }
