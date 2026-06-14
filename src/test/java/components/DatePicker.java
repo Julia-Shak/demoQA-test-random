@@ -12,7 +12,7 @@ public class DatePicker {
         $(".react-datepicker__month-select").selectOption(month);
         $$(".react-datepicker__day")
                 .filter(visible)
-                .filter(not(cssClass("react-datepicker__day--outside-month")))                .findBy(text(day))
+                .filter(not(cssClass("react-datepicker__day--outside-month"))).findBy(text(day))
                 .click();
     }
 }

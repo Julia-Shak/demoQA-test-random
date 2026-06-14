@@ -1,4 +1,3 @@
-// src/test/java/tests/PracticeFormTest.java
 package tests;
 
 import org.junit.jupiter.api.Test;
@@ -8,18 +7,20 @@ import components.ResultModal;
 
 public class PracticeFormTest extends TestBase {
 
+    RandomUtils randomUtils = new RandomUtils();
+
     @Test
     void fillPracticeFormWithRandomDataTest() {
-        String firstName = RandomUtils.getFirstName();
-        String lastName = RandomUtils.getLastName();
-        String email = RandomUtils.getEmail();
-        String mobile = RandomUtils.getMobile();
-        String address = RandomUtils.getAddress();
-        String hobby = RandomUtils.getRandomHobby();
-        String[] stateCity = RandomUtils.getRandomStateAndCity();
+        String firstName = randomUtils.getFirstName();
+        String lastName = randomUtils.getLastName();
+        String email = randomUtils.getEmail();
+        String mobile = randomUtils.getMobile();
+        String address = randomUtils.getAddress();
+        String hobby = randomUtils.getRandomHobby();
+        String[] stateCity = randomUtils.getRandomStateAndCity();
         String state = stateCity[0];
         String city = stateCity[1];
-        String[] dob = RandomUtils.getRandomDateOfBirthParts();
+        String[] dob = randomUtils.getRandomDateOfBirthParts();
 
         new PracticeFormPage()
                 .openPage()

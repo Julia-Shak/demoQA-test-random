@@ -3,23 +3,12 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import components.DatePicker;
+
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selectors.byText;
 
 public class PracticeFormPage {
-    private final SelenideElement
-            firstName = $("#firstName"),
-            lastName = $("#lastName"),
-            userEmail = $("#userEmail"),
-            genderFemale = $("#genterWrapper").$(byText("Female")),
-            userNumber = $("#userNumber"),
-            dateOfBirthInput = $("#dateOfBirthInput"),
-            subjectsInput = $("#subjectsInput"),
-            uploadPicture = $("#uploadPicture"),
-            currentAddress = $("#currentAddress"),
-            state = $("#state"),
-            city = $("#city"),
-            submitButton = $("#submit");
+    private final SelenideElement firstName = $("#firstName"), lastName = $("#lastName"), userEmail = $("#userEmail"), genderFemale = $("#genterWrapper").$(byText("Female")), userNumber = $("#userNumber"), dateOfBirthInput = $("#dateOfBirthInput"), subjectsInput = $("#subjectsInput"), uploadPicture = $("#uploadPicture"), currentAddress = $("#currentAddress"), state = $("#state"), city = $("#city"), submitButton = $("#submit");
 
     private final DatePicker datePicker = new DatePicker();
 

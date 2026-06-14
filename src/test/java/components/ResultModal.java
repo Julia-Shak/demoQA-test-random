@@ -12,8 +12,7 @@ public class ResultModal {
     }
 
     public ResultModal checkStateAndCity(String stateAndCity) {
-        $(".table-responsive").$(byText("State and City")).closest("tr")
-                .shouldHave(text(stateAndCity));
+        $(".table-responsive").$(byText("State and City")).closest("tr").shouldHave(text(stateAndCity));
         return this;
     }
 
